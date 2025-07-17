@@ -1,16 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Introduction to D3</title>
-    <!-- Import D3.js from CDN -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn D3: Interactive Data Visualization Tutorial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .header .description {
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .header .course-info {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .content-wrapper {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .content-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+        }
+
+        .intro-content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .intro-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .intro-content p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .language-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .language-section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .language-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .language-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .language-header {
+            padding: 30px 30px 20px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+
+        .language-header h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .language-header .flag {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .language-header p {
+            color: #4a5568;
+            font-size: 1rem;
+        }
+
+        .tutorials-grid {
+            padding: 20px 30px 30px 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .tutorial-item {
+            display: block;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            color: inherit;
+        }
+
+        .tutorial-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .tutorial-number {
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .tutorial-title {
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .language-sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .tutorials-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-content {
+                padding: 30px 20px;
+            }
+            
+            .language-header {
+                padding: 20px;
+            }
+            
+            .tutorials-grid {
+                padding: 15px 20px 20px 20px;
+            }
+        }
+
+        /* Fade-in animation for content */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Staggered animation for tutorial items */
+        .tutorial-item {
+            animation: slideInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .tutorial-item:nth-child(1) { animation-delay: 0.1s; }
+        .tutorial-item:nth-child(2) { animation-delay: 0.2s; }
+        .tutorial-item:nth-child(3) { animation-delay: 0.3s; }
+        .tutorial-item:nth-child(4) { animation-delay: 0.4s; }
+        .tutorial-item:nth-child(5) { animation-delay: 0.5s; }
+        .tutorial-item:nth-child(6) { animation-delay: 0.6s; }
+        .tutorial-item:nth-child(7) { animation-delay: 0.7s; }
+        .tutorial-item:nth-child(8) { animation-delay: 0.8s; }
+        .tutorial-item:nth-child(9) { animation-delay: 0.9s; }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>D3.js Barebone Examples</h1>
-    <div id="chart"></div>
-    <script type="module" src="/src/example1.js"></script>
-    <h2>Histogram Example</h2>
-    <div id="histogram"></div>
+    <div class="container">
+        <header class="header fade-in">
+            <h1>Learn D3</h1>
+            <p class="subtitle">Interactive Data Visualization Tutorial</p>
+            <p class="description">
+                Master the fundamentals of D3.js through hands-on examples and interactive exercises. 
+                This comprehensive tutorial will take you from beginner to advanced concepts in data visualization.
+            </p>
+            <div class="course-info">University Course Tutorial • 9 Parts</div>
+        </header>
+        
+        <div class="content-wrapper fade-in">
+            <div class="intro-content">
+                <h2>About This Tutorial</h2>
+                <p>
+                    D3.js (Data-Driven Documents) is a powerful JavaScript library for creating dynamic, 
+                    interactive data visualizations in web browsers. This tutorial series provides a structured 
+                    learning path from basic concepts to advanced techniques.
+                </p>
+                <p>
+                    Each tutorial builds upon the previous one, covering essential topics like data binding, 
+                    scales, shapes, animations, and interactions. All examples are interactive and can be 
+                    modified in real-time to enhance your learning experience.
+                </p>
+                <p>
+                    Choose your preferred language below to begin your journey into the world of data visualization!
+                </p>
+            </div>
+        </div>
+
+        <div class="language-sections">
+            <!-- English Version -->
+            <div class="language-section fade-in">
+                <div class="language-header">
+                    <span class="flag">🇺🇸</span>
+                    <h3>English Version</h3>
+                    <p>Complete tutorial series in English</p>
+                </div>
+                <div class="tutorials-grid">
+                    <a href="./Notebooks/en1/" class="tutorial-item">
+                        <div class="tutorial-number">Part 1</div>
+                        <div class="tutorial-title">Introduction</div>
+                    </a>
+                    <a href="./Notebooks/en2/" class="tutorial-item">
+                        <div class="tutorial-number">Part 2</div>
+                        <div class="tutorial-title">By Example</div>
+                    </a>
+                    <a href="./Notebooks/en3/" class="tutorial-item">
+                        <div class="tutorial-number">Part 3</div>
+                        <div class="tutorial-title">Data</div>
+                    </a>
+                    <a href="./Notebooks/en4/" class="tutorial-item">
+                        <div class="tutorial-number">Part 4</div>
+                        <div class="tutorial-title">Scales</div>
+                    </a>
+                    <a href="./Notebooks/en5/" class="tutorial-item">
+                        <div class="tutorial-number">Part 5</div>
+                        <div class="tutorial-title">Shapes</div>
+                    </a>
+                    <a href="./Notebooks/en6/" class="tutorial-item">
+                        <div class="tutorial-number">Part 6</div>
+                        <div class="tutorial-title">Animation</div>
+                    </a>
+                    <a href="./Notebooks/en7/" class="tutorial-item">
+                        <div class="tutorial-number">Part 7</div>
+                        <div class="tutorial-title">Joins</div>
+                    </a>
+                    <a href="./Notebooks/en8/" class="tutorial-item">
+                        <div class="tutorial-number">Part 8</div>
+                        <div class="tutorial-title">Interaction</div>
+                    </a>
+                    <a href="./Notebooks/en9/" class="tutorial-item">
+                        <div class="tutorial-number">Part 9</div>
+                        <div class="tutorial-title">Further Topics</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- German Version -->
+            <div class="language-section fade-in">
+                <div class="language-header">
+                    <span class="flag">🇩🇪</span>
+                    <h3>Deutsche Version</h3>
+                    <p>Vollständige Tutorial-Serie auf Deutsch</p>
+                </div>
+                <div class="tutorials-grid">
+                    <a href="./Notebooks/de1/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 1</div>
+                        <div class="tutorial-title">Einführung</div>
+                    </a>
+                    <a href="./Notebooks/de2/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 2</div>
+                        <div class="tutorial-title">Nach Beispielen</div>
+                    </a>
+                    <a href="./Notebooks/de3/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 3</div>
+                        <div class="tutorial-title">Daten</div>
+                    </a>
+                    <a href="./Notebooks/de4/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 4</div>
+                        <div class="tutorial-title">Skalen</div>
+                    </a>
+                    <a href="./Notebooks/de5/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 5</div>
+                        <div class="tutorial-title">Formen</div>
+                    </a>
+                    <a href="./Notebooks/de6/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 6</div>
+                        <div class="tutorial-title">Animation</div>
+                    </a>
+                    <a href="./Notebooks/de7/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 7</div>
+                        <div class="tutorial-title">Joins</div>
+                    </a>
+                    <a href="./Notebooks/de8/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 8</div>
+                        <div class="tutorial-title">Interaktion</div>
+                    </a>
+                    <a href="./Notebooks/de9/" class="tutorial-item">
+                        <div class="tutorial-number">Teil 9</div>
+                        <div class="tutorial-title">Weitere Themen</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer fade-in">
+            <p>Learn D3: Interactive Data Visualization Tutorial</p>
+            <p>Created for University Course • <a href="https://github.com/crlvgl/Introduction-D3" target="_blank">View on GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth scrolling and enhanced interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation trigger
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Add hover effects for tutorial items
+            document.querySelectorAll('.tutorial-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click animation
+            document.querySelectorAll('.tutorial-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    this.style.transform = 'translateY(0) scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-2px) scale(1.02)';
+                    }, 150);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

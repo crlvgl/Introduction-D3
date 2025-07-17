@@ -1,0 +1,14 @@
+{
+  "name": "671cbf951cef84a1",
+  "main": "671cbf951cef84a1@104.js",
+  "version": "104.0.0",
+  "homepage": "https://observablehq.com/d/671cbf951cef84a1",
+  "author": {
+    "name": "visual analytics",
+    "url": "https://observablehq.com/@visual-analytics10"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

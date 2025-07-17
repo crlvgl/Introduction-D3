@@ -1,0 +1,339 @@
+/* Enhanced Observable Inspector Styles */
+:root {
+  --syntax_normal: #2d3748;
+  --syntax_comment: #718096;
+  --syntax_number: #3182ce;
+  --syntax_keyword: #d53f8c;
+  --syntax_atom: #38a169;
+  --syntax_string: #3182ce;
+  --syntax_error: #e53e3e;
+  --syntax_unknown_variable: #a0aec0;
+  --syntax_known_variable: #2b6cb0;
+  --syntax_matchbracket: #3182ce;
+  --syntax_key: #805ad5;
+  --mono_fonts: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+}
+
+/* Base inspector styles */
+.observablehq--collapsed,
+.observablehq--expanded,
+.observablehq--function,
+.observablehq--gray,
+.observablehq--import,
+.observablehq--string:after,
+.observablehq--string:before {
+  color: var(--syntax_normal);
+}
+
+.observablehq--collapsed,
+.observablehq--inspect a {
+  cursor: pointer;
+}
+
+.observablehq--field {
+  text-indent: -1em;
+  margin-left: 1em;
+}
+
+.observablehq--empty {
+  color: var(--syntax_comment);
+  font-style: italic;
+}
+
+.observablehq--blue,
+.observablehq--keyword {
+  color: var(--syntax_keyword);
+  font-weight: 500;
+}
+
+.observablehq--forbidden,
+.observablehq--pink {
+  color: #e53e3e;
+}
+
+.observablehq--orange {
+  color: #dd6b20;
+}
+
+.observablehq--boolean,
+.observablehq--null,
+.observablehq--undefined {
+  color: var(--syntax_atom);
+  font-weight: 500;
+}
+
+.observablehq--bigint,
+.observablehq--date,
+.observablehq--green,
+.observablehq--number,
+.observablehq--regexp,
+.observablehq--symbol {
+  color: var(--syntax_number);
+}
+
+.observablehq--index,
+.observablehq--key {
+  color: var(--syntax_key);
+  font-weight: 500;
+}
+
+.observablehq--prototype-key {
+  color: #a0aec0;
+}
+
+.observablehq--empty {
+  font-style: oblique;
+}
+
+.observablehq--purple,
+.observablehq--string {
+  color: var(--syntax_string);
+}
+
+.observablehq--error,
+.observablehq--red {
+  color: var(--syntax_error);
+  background: #fed7d7;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 4px solid var(--syntax_error);
+}
+
+.observablehq--inspect {
+  font: 14px/1.5 var(--mono_fonts);
+  overflow-x: auto;
+  display: block;
+  white-space: pre;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.observablehq--inspect:hover {
+  border-color: #cbd5e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.observablehq--error .observablehq--inspect {
+  word-break: break-all;
+  white-space: pre-wrap;
+  background: #fed7d7;
+  border-color: var(--syntax_error);
+  color: var(--syntax_error);
+}
+
+/* Enhanced cell styling */
+.observablehq {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  max-width: none;
+}
+
+.observablehq h1,
+.observablehq h2,
+.observablehq h3,
+.observablehq h4,
+.observablehq h5,
+.observablehq h6 {
+  font-weight: 600;
+  margin: 32px 0 16px 0;
+  color: #2d3748;
+  line-height: 1.3;
+}
+
+.observablehq h1 {
+  font-size: 2.25rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 16px;
+}
+
+.observablehq h2 {
+  font-size: 1.875rem;
+  color: #4a5568;
+}
+
+.observablehq h3 {
+  font-size: 1.5rem;
+  color: #4a5568;
+}
+
+.observablehq p {
+  margin: 16px 0;
+  color: #4a5568;
+  font-size: 16px;
+}
+
+.observablehq blockquote {
+  border-left: 4px solid #667eea;
+  background: #f7fafc;
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  color: #2d3748;
+  font-style: italic;
+}
+
+.observablehq blockquote p {
+  margin: 8px 0;
+}
+
+.observablehq code {
+  background: #edf2f7;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: var(--mono_fonts);
+  font-size: 0.875em;
+  color: #d53f8c;
+  font-weight: 500;
+}
+
+.observablehq pre {
+  background: #1a202c;
+  color: #e2e8f0;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 24px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.observablehq pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-weight: normal;
+}
+
+.observablehq ul,
+.observablehq ol {
+  margin: 16px 0;
+  padding-left: 32px;
+}
+
+.observablehq li {
+  margin: 8px 0;
+  color: #4a5568;
+}
+
+.observablehq a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.observablehq a:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+/* Button enhancements */
+.observablehq button,
+.observablehq input[type="button"],
+.observablehq input[type="submit"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.observablehq button:hover,
+.observablehq input[type="button"]:hover,
+.observablehq input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+.observablehq button:active,
+.observablehq input[type="button"]:active,
+.observablehq input[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Form elements */
+.observablehq input,
+.observablehq select,
+.observablehq textarea {
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s ease;
+}
+
+.observablehq input:focus,
+.observablehq select:focus,
+.observablehq textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Table styling */
+.observablehq table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 24px 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.observablehq th,
+.observablehq td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.observablehq th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.observablehq tr:hover {
+  background: #f8fafc;
+}
+
+/* SVG enhancements */
+.observablehq svg {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 24px 0;
+  border: 1px solid #e2e8f0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .observablehq--inspect {
+    font-size: 12px;
+    padding: 12px;
+  }
+  
+  .observablehq h1 {
+    font-size: 1.875rem;
+  }
+  
+  .observablehq h2 {
+    font-size: 1.5rem;
+  }
+  
+  .observablehq h3 {
+    font-size: 1.25rem;
+  }
+}

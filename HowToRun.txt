@@ -76,7 +76,7 @@ Method 1: Using Node.js
     - Notebooks are located in the `Notebooks/` directory, for more information on which notebook to run, refer to the `README.md` file.
     - You need to be in the directory where `index.html`, `index.js`, and (optionally) the `files/` directory are located.
 3. Install the required dependencies.
-    - These folders dont have a `package.json` file, so use the instructions from 'The entire project' to install the dependencies.
+    - Run the command `npm install` to install all dependencies listed in `package.json`.
 4. Start the server.
     - Run the command `npm start` to start the server.
     - The server should be configured to run on `http://localhost:5500` or a similar port. npm will tell you the exact URL.

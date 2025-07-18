@@ -21,6 +21,17 @@
             background-size: 200% 200%;
             animation: gradientShift 15s ease infinite;
             min-height: 100vh;
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+            overflow: auto;
+        }
+
+        /* Hide scrollbar for WebKit browsers */
+        body::-webkit-scrollbar {
+            width: 0 !important;
+            height: 0 !important;
+            background: transparent;
         }
 
         .container {
@@ -282,28 +293,32 @@
         import define from "./index.js";
         import {Runtime, Library, Inspector} from "./runtime.js";
 
-        // Progress tracking
-        let totalCells = 0;
-        let loadedCells = 0;
-
-        function updateProgress() {
-            loadedCells++;
-            const progress = Math.min((loadedCells / Math.max(totalCells, 1)) * 100, 100);
+        // Scroll-based progress tracking
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = Math.min((scrollTop / Math.max(scrollHeight, 1)) * 100, 100);
+            
             document.getElementById('progressBar').style.width = progress + '%';
             
-            // Hide progress bar when complete
-            if (progress >= 100) {
-                setTimeout(() => {
-                    document.querySelector('.progress-indicator').style.opacity = '0';
-                }, 500);
+            // Hide progress bar when at top (0% scroll)
+            const progressIndicator = document.querySelector('.progress-indicator');
+            if (progress <= 0) {
+                progressIndicator.style.opacity = '0.3';
+            } else {
+                progressIndicator.style.opacity = '1';
             }
         }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', updateScrollProgress);
+        window.addEventListener('resize', updateScrollProgress);
 
         // Initialize the notebook
         const runtime = new Runtime();
         const main = runtime.module(define, Inspector.into(document.getElementById('notebook')));
         
-        // Clear initial loading and add progress tracking
+        // Clear initial loading
         setTimeout(() => {
             const notebook = document.getElementById('notebook');
             const loading = notebook.querySelector('.loading');
@@ -317,7 +332,6 @@
                     mutation.addedNodes.forEach((node) => {
                         if (node.nodeType === 1) { // Element node
                             node.classList.add('fade-in');
-                            updateProgress();
                         }
                     });
                 });
@@ -325,8 +339,8 @@
             
             observer.observe(notebook, { childList: true, subtree: true });
             
-            // Estimate total cells and start progress
-            totalCells = 20; // Rough estimate for this notebook
+            // Initial progress calculation
+            setTimeout(updateScrollProgress, 100);
         }, 1000);
 
         // Smooth scrolling for anchor links

@@ -86,17 +86,17 @@ The tutorial is organized into 9 progressive lessons (de1-de9 for German, en1-en
 2. **Start the main tutorial interface:**
    ```bash
    # Using Python
-   python -m http.server 8000
+   python -m http.server 5500
    
    # Using Node.js
-   npx http-server
+   npm start
    
-   # Using PHP
-   php -S localhost:8000
+   # Using Live Server in Visual Studio Code
+   # Open the project folder and click "Go Live"
    ```
 
 3. **Access the tutorial:**
-   Open your browser and navigate to `http://localhost:8000`
+   Open your browser and navigate to `http://localhost:5500`
 
 > For more details on how to run, see the [Running Instructions](#running-instructions) section below or read HowToRun.txt.
 
@@ -106,10 +106,10 @@ Each notebook can be run independently:
 
 ```bash
 cd Notebooks/en1  # or any other lesson folder
-npx http-server
+npm start         # or any other method to start a local server
 ```
 
-Then open `http://localhost:8080` in your browser.
+Then open `http://localhost:5500` in your browser.
 
 > For more details on how to run, see the [Running Instructions](#running-instructions) section below or read HowToRun.txt.
 

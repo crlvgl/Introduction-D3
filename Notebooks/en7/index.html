@@ -266,6 +266,254 @@
             width: 0%;
             transition: width 0.3s ease;
         }
+
+        /* Floating Navigation Container */
+        .floating-nav {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            width: 280px;
+            max-height: 70vh;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+
+        .floating-nav.minimized {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .nav-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-content {
+            padding: 16px 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .floating-nav.minimized .nav-content {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .current-tutorial {
+            padding: 0 20px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .current-tutorial-label {
+            font-size: 0.75rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .current-tutorial-title {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.9rem;
+        }
+
+        .tutorial-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .tutorial-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 20px;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .tutorial-item:hover {
+            background: #e7ebfd;
+            color: #2d3748;
+        }
+
+        .tutorial-item.active {
+            background: #edf2f7;
+            border-left-color: #667eea;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .tutorial-number {
+            background: #e2e8f0;
+            color: #4a5568;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .tutorial-item.active .tutorial-number {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Home Link Container */
+        .floating-home {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(calc(50% + 200px));
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 999;
+            width: 280px;
+            transition: all 0.3s ease;
+        }
+
+        .floating-nav.minimized + .floating-home {
+            width: 60px;
+            border-radius: 50%;
+            height: 60px;
+            overflow: hidden;
+            transform: translateY(calc(50% + 80px));
+        }
+
+        .home-link {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .home-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(240, 147, 251, 0.4);
+        }
+
+        .home-icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .floating-nav.minimized + .floating-home .home-link {
+            padding: 18px;
+            justify-content: center;
+        }
+
+        .floating-nav.minimized + .floating-home .home-text {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .floating-nav,
+            .floating-home {
+                right: 10px;
+                width: 250px;
+            }
+            
+            .floating-nav.minimized,
+            .floating-nav.minimized + .floating-home {
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-nav.minimized + .floating-home {
+                transform: translateY(calc(50% + 70px));
+            }
+
+            .floating-home {
+                transform: translateY(calc(50% + 180px));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .floating-nav,
+            .floating-home {
+                width: 220px;
+            }
+
+            .floating-home {
+                transform: translateY(calc(50% + 160px));
+            }
+
+            .floating-nav.minimized + .floating-home {
+                transform: translateY(calc(50% + 60px));
+            }
+        }
+
+        /* Custom scrollbar for tutorial list */
+        .tutorial-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .tutorial-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+
+        .tutorial-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 2px;
+        }
+
+        .tutorial-list::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
     </style>
 </head>
 <body>
@@ -273,6 +521,66 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
     
+    <!-- Floating Navigation Container -->
+    <div class="floating-nav" id="floatingNav">
+        <div class="nav-header" onclick="toggleNav()">
+            <span>Tutorial Navigation</span>
+            <button class="nav-toggle" id="navToggle">−</button>
+        </div>
+        <div class="nav-content" id="navContent">
+            <div class="current-tutorial">
+                <div class="current-tutorial-label">Current Tutorial</div>
+                <div class="current-tutorial-title">Part 7: Joins</div>
+            </div>
+            <div class="tutorial-list">
+                <a href="../en1/index.html" class="tutorial-item">
+                    <div class="tutorial-number">1</div>
+                    <span>Introduction</span>
+                </a>
+                <a href="../en2/index.html" class="tutorial-item">
+                    <div class="tutorial-number">2</div>
+                    <span>By Example</span>
+                </a>
+                <a href="../en3/index.html" class="tutorial-item">
+                    <div class="tutorial-number">3</div>
+                    <span>Data</span>
+                </a>
+                <a href="../en4/index.html" class="tutorial-item">
+                    <div class="tutorial-number">4</div>
+                    <span>Scales</span>
+                </a>
+                <a href="../en5/index.html" class="tutorial-item">
+                    <div class="tutorial-number">5</div>
+                    <span>Shapes</span>
+                </a>
+                <a href="../en6/index.html" class="tutorial-item">
+                    <div class="tutorial-number">6</div>
+                    <span>Animation</span>
+                </a>
+                <a href="../en7/index.html" class="tutorial-item active">
+                    <div class="tutorial-number">7</div>
+                    <span>Joins</span>
+                </a>
+                <a href="../en8/index.html" class="tutorial-item">
+                    <div class="tutorial-number">8</div>
+                    <span>Interaction</span>
+                </a>
+                <a href="../en9/index.html" class="tutorial-item">
+                    <div class="tutorial-number">9</div>
+                    <span>Further Topics</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Link Container -->
+    <div class="floating-home">
+        <a href="../../index.html" class="home-link">
+            <span class="home-icon">🏠</span>
+            <span class="home-text">Back to Home</span>
+        </a>
+    </div>
+
     <div class="container">
         <header class="header fade-in">
             <h1>Learn D3: Joins</h1>
@@ -313,6 +621,48 @@
         // Add scroll event listener
         window.addEventListener('scroll', updateScrollProgress);
         window.addEventListener('resize', updateScrollProgress);
+
+        // Floating Navigation Toggle
+        let navMinimized = false;
+        
+        function toggleNav() {
+            const nav = document.getElementById('floatingNav');
+            const toggle = document.getElementById('navToggle');
+            
+            navMinimized = !navMinimized;
+            
+            if (navMinimized) {
+                nav.classList.add('minimized');
+                toggle.textContent = '+';
+                toggle.style.transform = 'rotate(180deg)';
+            } else {
+                nav.classList.remove('minimized');
+                toggle.textContent = '−';
+                toggle.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Make toggleNav function globally available
+        window.toggleNav = toggleNav;
+
+        // Auto-minimize on mobile
+        function checkMobileAutoMinimize() {
+            if (window.innerWidth <= 768) {
+                const nav = document.getElementById('floatingNav');
+                const toggle = document.getElementById('navToggle');
+                
+                if (!navMinimized) {
+                    nav.classList.add('minimized');
+                    toggle.textContent = '+';
+                    toggle.style.transform = 'rotate(180deg)';
+                    navMinimized = true;
+                }
+            }
+        }
+
+        // Check on load and resize
+        window.addEventListener('resize', checkMobileAutoMinimize);
+        checkMobileAutoMinimize();
 
         // Initialize the notebook
         const runtime = new Runtime();

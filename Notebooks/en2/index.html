@@ -267,6 +267,32 @@
             transition: width 0.3s ease;
         }
 
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
         /* Floating Navigation Container */
         .floating-nav {
             position: fixed;
@@ -595,6 +621,13 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="container">
+        <footer class="footer fade-in">
+            <p>Learn D3: Interactive Data Visualization Tutorial</p>
+            <p>Created for University Course • <a href="https://github.com/crlvgl/Introduction-D3" target="_blank">View on GitHub</a></p>
+        </footer>
     </div>
 
     <script type="module">

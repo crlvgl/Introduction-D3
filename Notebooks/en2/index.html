@@ -318,6 +318,9 @@
         const runtime = new Runtime();
         const main = runtime.module(define, Inspector.into(document.getElementById('notebook')));
         
+        // Track if initial load is complete
+        let initialLoadComplete = false;
+        
         // Clear initial loading
         setTimeout(() => {
             const notebook = document.getElementById('notebook');
@@ -326,18 +329,25 @@
                 loading.remove();
             }
             
-            // Add fade-in to all cells as they appear
+            // Add fade-in to cells only during initial load
             const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    mutation.addedNodes.forEach((node) => {
-                        if (node.nodeType === 1) { // Element node
-                            node.classList.add('fade-in');
-                        }
+                if (!initialLoadComplete) {
+                    mutations.forEach((mutation) => {
+                        mutation.addedNodes.forEach((node) => {
+                            if (node.nodeType === 1) { // Element node
+                                node.classList.add('fade-in');
+                            }
+                        });
                     });
-                });
+                }
             });
             
             observer.observe(notebook, { childList: true, subtree: true });
+            
+            // Mark initial load as complete after a reasonable time
+            setTimeout(() => {
+                initialLoadComplete = true;
+            }, 3000);
             
             // Initial progress calculation
             setTimeout(updateScrollProgress, 100);

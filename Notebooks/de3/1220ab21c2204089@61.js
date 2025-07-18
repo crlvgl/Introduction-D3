@@ -10,7 +10,7 @@ md`# Learn D3: Daten (3/9)
 > _Dies ist die deutsche Übersetzung der Serie. Die Übersetzung wurde teils automatisiert erstellt. Keine Garantie auf Funktion, dafür bitte die [englische Version](/Notebooks/en3/index.html) verwenden. Alles sollte aber dennoch funktionieren._ <br><br>
 > _**Wichtig:** In dieser Datei wurde eine Menge gelöscht und geändert, da Observable und klassisches HTML+Js beim Importieren von Daten unterschiedlich funktionieren._ <br>
 > _Die Codezellen in diesem Notizbuch enthalten den Code, der in Observable ausgeführt werden soll. Alle Äquivalente für diese Snippets sollten in die Textzellen eingefügt worden sein, aber da dieses Notebook ziemlich viel geändert wurde, könnten einige fehlen oder sich an unerwarteten Stellen befinden. Ich kann auch nicht garantieren, dass alle „normalen“ Codesnippets außerhalb des Kontexts dieses Notizbuchs funktionieren._ <br>
-> _Im Zweifelsfall [fragt Google](https://letmegooglethat.com/?q=d3+csvparse)._`
+> _Im Zweifelsfall [fragt Google](https://letmegooglethat.com/?q=d3.js+csvparse)._`
 )}
 
 function _2(FileAttachment){return(

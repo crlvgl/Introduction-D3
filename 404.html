@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Redirecting to Observable...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .redirect-container {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            color: white;
+            max-width: 700px;
+            margin: 20px;
+        }
+
+        .redirect-container h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .redirect-container p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .current-url {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .manual-link {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .manual-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .manual-link.secondary {
+            background: transparent;
+        }
+
+        .countdown {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .status-message {
+            font-size: 1rem;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .status-message.error {
+            background: rgba(255, 100, 100, 0.2);
+        }
+
+        .status-message.success {
+            background: rgba(100, 255, 100, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-container">
+        <h1 id="main-title">🔗 Checking URL...</h1>
+        <p id="main-description">Analyzing the requested URL to determine the best redirect...</p>
+        
+        <div class="current-url" id="current-url">
+            <!-- URL will be inserted here -->
+        </div>
+        
+        <div class="spinner" id="spinner"></div>
+        <div class="countdown" id="countdown" style="display: none;">Redirecting in <span id="timer">5</span> seconds...</div>
+        
+        <div class="status-message" id="status-message" style="display: none;">
+            <!-- Status messages will appear here -->
+        </div>
+        
+        <div class="button-group" id="button-group" style="display: none;">
+            <a href="#" class="manual-link" id="manual-link" target="_blank">Go to Observable</a>
+            <a href="/" class="manual-link secondary" id="home-link">Go to Homepage</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to detect and redirect to Observable
+        function handleObservableRedirect() {
+            const currentPath = window.location.pathname;
+            const currentHash = window.location.hash;
+            const currentSearch = window.location.search;
+            const fullUrl = window.location.href;
+            
+            // Display current URL
+            document.getElementById('current-url').textContent = fullUrl;
+            
+            // Check if this looks like an Observable notebook path
+            let targetUrl = '';
+            let isObservableUrl = false;
+            
+            // Enhanced Observable notebook patterns (allowing additional path segments)
+            const observablePatterns = [
+                /^\/@[^\/]+\/[^\/]+/,     // /@username/notebook-name(/*) 
+                /^\/d\/[a-f0-9]+/,        // /d/notebook-id(/*) - hexadecimal IDs
+                /^\/collection\/[^\/]+/,  // /collection/collection-name(/*)
+            ];
+            
+            // Test against patterns
+            for (let pattern of observablePatterns) {
+                if (pattern.test(currentPath)) {
+                    isObservableUrl = true;
+                    break;
+                }
+            }
+            
+            // More restrictive check for username/notebook pattern
+            if (!isObservableUrl && /^\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/.test(currentPath)) {
+                const segments = currentPath.split('/').filter(s => s.length > 0);
+                if (segments.length >= 2) {
+                    const firstSegment = segments[0].toLowerCase();
+                    const secondSegment = segments[1].toLowerCase();
+                    
+                    // Exclude common project directory names
+                    const commonProjectDirs = [
+                        'notebooks', 'src', 'dist', 'build', 'public', 'static', 
+                        'assets', 'images', 'css', 'js', 'lib', 'vendor', 'api',
+                        'admin', 'test', 'tests', 'docs', 'documentation'
+                    ];
+                    
+                    if (!commonProjectDirs.includes(firstSegment) && 
+                        !commonProjectDirs.includes(secondSegment)) {
+                        isObservableUrl = true;
+                    }
+                }
+            }
+            
+            if (isObservableUrl) {
+                // Construct Observable URL
+                if (currentPath.startsWith('/@')) {
+                    // Already in correct format: /@username/notebook
+                    targetUrl = `https://observablehq.com${currentPath}${currentSearch}${currentHash}`;
+                } else if (currentPath.match(/^\/d\/[^\/]+/)) {
+                    // Notebook ID format: /d/notebook-id
+                    targetUrl = `https://observablehq.com${currentPath}${currentSearch}${currentHash}`;
+                } else if (currentPath.match(/^\/collection\/[^\/]+/)) {
+                    // Collection format: /collection/collection-name
+                    targetUrl = `https://observablehq.com${currentPath}${currentSearch}${currentHash}`;
+                } else if (currentPath.match(/^\/[^\/]+\/[^\/]+/)) {
+                    // User/notebook format: /username/notebook -> /@username/notebook
+                    targetUrl = `https://observablehq.com/@${currentPath.substring(1)}${currentSearch}${currentHash}`;
+                }
+                
+                // Update UI for Observable redirect
+                document.getElementById('main-title').innerHTML = '🔗 Redirecting to Observable';
+                document.getElementById('main-description').textContent = 'This looks like an Observable notebook link. Redirecting you to the correct page...';
+                
+                // Show countdown and buttons
+                document.getElementById('countdown').style.display = 'block';
+                document.getElementById('button-group').style.display = 'flex';
+                
+                // Update manual link
+                document.getElementById('manual-link').href = targetUrl;
+                document.getElementById('manual-link').textContent = 'Go to Observable Now';
+                
+                // Start countdown
+                startCountdown(targetUrl, 5);
+                
+            } else {
+                // Not an Observable URL - show regular 404
+                document.getElementById('main-title').innerHTML = '❌ Page Not Found';
+                document.getElementById('main-description').textContent = 'The requested page could not be found on this server.';
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('button-group').style.display = 'flex';
+                document.getElementById('manual-link').href = '/';
+                document.getElementById('manual-link').textContent = 'Go to Homepage';
+                document.getElementById('manual-link').removeAttribute('target');
+                
+                // Show status message
+                const statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = 'This doesn\'t appear to be an Observable notebook link. Try navigating back to the homepage.';
+                statusMessage.className = 'status-message error';
+                statusMessage.style.display = 'block';
+            }
+        }
+        
+        function startCountdown(targetUrl, seconds) {
+            const timer = document.getElementById('timer');
+            const countdownElement = document.getElementById('countdown');
+            let countdown = seconds;
+            
+            const interval = setInterval(() => {
+                countdown--;
+                timer.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    countdownElement.textContent = 'Redirecting now...';
+                    
+                    // Show success message
+                    const statusMessage = document.getElementById('status-message');
+                    statusMessage.textContent = `Redirecting to: ${targetUrl}`;
+                    statusMessage.className = 'status-message success';
+                    statusMessage.style.display = 'block';
+                    
+                    // Redirect
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 500);
+                }
+            }, 1000);
+            
+            // Allow manual redirect
+            document.getElementById('manual-link').addEventListener('click', () => {
+                clearInterval(interval);
+                window.open(targetUrl, '_blank');
+            });
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', handleObservableRedirect);
+        
+        // Also handle case where this script runs before page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', handleObservableRedirect);
+        } else {
+            handleObservableRedirect();
+        }
+        
+        // Add home link functionality
+        document.getElementById('home-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>

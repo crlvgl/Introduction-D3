@@ -21,12 +21,71 @@
         // Remove protocol, domain, and query params for analysis
         const path = url.replace(/^https?:\/\/[^\/]+/, '').split('?')[0].split('#')[0];
         
-        // Observable notebook patterns:
-        // /@username/notebook-name
-        // /d/notebook-id
-        // /collection/collection-name
-        // /username/notebook-name (alternative format)
-        return /^(\/@[^\/]+\/[^\/]+|\/d\/[^\/]+|\/collection\/[^\/]+|\/[^\/]+\/[^\/]+)$/.test(path);
+        // First, exclude paths that are definitely part of this project
+        const projectPaths = [
+            /^\/Notebooks\//,           // Project notebook directories
+            /^\/files\//,               // File attachments
+            /^\/assets\//,              // Asset directories
+            /^\/css\//,                 // CSS directories
+            /^\/js\//,                  // JavaScript directories
+            /^\/images\//,              // Image directories
+            /^\/fonts\//,               // Font directories
+            /^\/(index|404)\.html?$/,   // Main pages
+            /^\/[^\/]*\.(html|css|js|json|csv|txt|md|png|jpg|jpeg|gif|svg|ico)$/,  // Files with extensions
+            /^\/\.well-known\//,        // Well-known paths
+            /^\/node_modules\//,        // Node modules
+            /^\/\.vscode\//,            // VS Code settings
+        ];
+        
+        // Check if this path should be excluded (is part of the project)
+        for (let exclusion of projectPaths) {
+            if (exclusion.test(path)) {
+                return false;
+            }
+        }
+        
+        // Observable notebook patterns (only check these if not excluded):
+        // /@username/notebook-name(/additional/paths)
+        // /d/notebook-id(/additional/paths) 
+        // /collection/collection-name(/additional/paths)
+        const observablePatterns = [
+            /^\/@[^\/]+\/[^\/]+/,       // /@username/notebook
+            /^\/d\/[a-f0-9]+/,          // /d/notebook-id (hexadecimal IDs)
+            /^\/collection\/[^\/]+/,    // /collection/name
+        ];
+        
+        // Test against Observable patterns
+        for (let pattern of observablePatterns) {
+            if (pattern.test(path)) {
+                return true;
+            }
+        }
+        
+        // More restrictive check for username/notebook pattern
+        // Only match if it looks like Observable usernames (no file extensions, specific format)
+        if (/^\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/.test(path)) {
+            // Additional checks to make sure it's not a project path
+            const segments = path.split('/').filter(s => s.length > 0);
+            if (segments.length >= 2) {
+                const firstSegment = segments[0].toLowerCase();
+                const secondSegment = segments[1].toLowerCase();
+                
+                // Exclude common project directory names
+                const commonProjectDirs = [
+                    'notebooks', 'src', 'dist', 'build', 'public', 'static', 
+                    'assets', 'images', 'css', 'js', 'lib', 'vendor', 'api',
+                    'admin', 'test', 'tests', 'docs', 'documentation'
+                ];
+                
+                if (!commonProjectDirs.includes(firstSegment) && 
+                    !commonProjectDirs.includes(secondSegment)) {
+                    // This might be an Observable username/notebook pattern
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
     /**
@@ -43,13 +102,13 @@
         if (path.startsWith('/@')) {
             // Already in correct format: /@username/notebook
             observablePath = path;
-        } else if (path.match(/^\/d\/[^\/]+$/)) {
+        } else if (path.match(/^\/d\/[a-f0-9]+/)) {
             // Notebook ID format: /d/notebook-id
             observablePath = path;
-        } else if (path.match(/^\/collection\/[^\/]+$/)) {
+        } else if (path.match(/^\/collection\/[^\/]+/)) {
             // Collection format: /collection/collection-name
             observablePath = path;
-        } else if (path.match(/^\/[^\/]+\/[^\/]+$/)) {
+        } else if (path.match(/^\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/)) {
             // User/notebook format: /username/notebook -> /@username/notebook
             observablePath = `/@${path.substring(1)}`;
         } else {

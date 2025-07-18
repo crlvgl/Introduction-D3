@@ -1,0 +1,7 @@
+# redirects for Observable notebooks
+_redirects
+.htaccess
+
+# markdown files execpt specific ones
+*.md
+**/!README.md

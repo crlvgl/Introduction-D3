@@ -6,6 +6,7 @@ A comprehensive D3.js tutorial series created for university courses at Hochshul
 
 - [Learn D3: Interactive Data Visualization Tutorial](#learn-d3-interactive-data-visualization-tutorial)
   - [Table of Contents](#table-of-contents)
+  - [Disclaimer](#disclaimer)
   - [Overview](#overview)
   - [Tutorial Structure](#tutorial-structure)
     - [German Version (de1-de9)](#german-version-de1-de9)
@@ -28,6 +29,13 @@ A comprehensive D3.js tutorial series created for university courses at Hochshul
       - [Method 1: Using Node.js](#method-1-using-nodejs-1)
       - [Method 2: Using Live Server Extension in Visual Studio Code](#method-2-using-live-server-extension-in-visual-studio-code-1)
       - [Method 3: Using Python's HTTP Server](#method-3-using-pythons-http-server-1)
+
+## Disclaimer
+This project is created for educational purposes as part of university data visualization coursework at Hochschule Düsseldorf. It is not affiliated with or endorsed by the original authors of the D3.js library or Observable notebooks.
+The original notebooks used in this tutorial were created by [**Mike Bostock**](https://observablehq.com/user/@mbostock).
+I have made some changes to the original notebooks to make them more suitable for our course, but the core content and structure remain the same. <br><br>
+I do not guarantee that the notebooks will work as expected nor that they will be free of errors. Enjoy at your own risk! <br>
+If you find any errors or inconsistencies, please let me know! I will be happy to fix them.
 
 ## Overview
 

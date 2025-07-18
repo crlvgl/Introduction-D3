@@ -5,3 +5,8 @@ _redirects
 # markdown files execpt specific ones
 *.md
 **/!README.md
+
+
+# npm packages
+node_modules/
+package-lock.json

@@ -11,26 +11,26 @@ This repository contains a complete D3.js learning path with 9 progressive lesso
 The tutorial is organized into 9 progressive lessons (de1-de9 for German, en1-en9 for English):
 
 ### German Version (de1-de9)
-- **de1**: Einführung (Introduction) - Basic D3.js concepts
-- **de2**: Data Loading and Basic Visualizations
-- **de3**: Scales and Axes
-- **de4**: Interactive Elements
-- **de5**: Advanced Interactions
-- **de6**: Animations and Transitions (with enhanced presentation)
-- **de7**: Complex Data Structures
-- **de8**: Advanced Visualizations
-- **de9**: Final Project Concepts
+- **de1**: Einführung (Introduction)
+- **de2**: Nach Beispielen (By Example)
+- **de3**: Daten (Data)
+- **de4**: Skalen (Scales)
+- **de5**: Formen (Shapes)
+- **de6**: Animation (Animation)
+- **de7**: Joins (Joins)
+- **de8**: Interaktion (Interaction)
+- **de9**: Weitere Themen (Further Topics)
 
 ### English Version (en1-en9)
-- **en1**: Introduction - Basic D3.js concepts
-- **en2**: Data Loading and Basic Visualizations
-- **en3**: Scales and Axes
-- **en4**: Interactive Elements
-- **en5**: Advanced Interactions
-- **en6**: Animations and Transitions
-- **en7**: Complex Data Structures
-- **en8**: Advanced Visualizations
-- **en9**: Final Project Concepts
+- **en1**: Introduction
+- **en2**: By Example
+- **en3**: Data
+- **en4**: Scales
+- **en5**: Shapes
+- **en6**: Animations
+- **en7**: Joins
+- **en8**: Interaction
+- **en9**: Further Topics
 
 ## Getting Started
 

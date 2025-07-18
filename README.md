@@ -234,7 +234,7 @@ _(For real though, if you find any errors or inconsistencies, please let me know
    - If not, manually open `http://127.0.0.1:5500/index.html` in your browser.
    - Make sure JavaScript is enabled in your browser settings.
 6. To stop the server, go back to your terminal and press `Ctrl+C`.
-
+<br><br>
 ### Single Notebooks
 
 #### Method 1: Using Node.js
